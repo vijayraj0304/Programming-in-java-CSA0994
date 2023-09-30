@@ -1,0 +1,63 @@
+class Customer {
+    private int accountNo;
+    private String accName;
+    private double balance;
+
+    public Customer(int accountNo, String accName, double balance) {
+        this.accountNo = accountNo;
+        this.accName = accName;
+        this.balance = balance;
+    }
+
+    public synchronized void deposit(double amount) {
+        System.out.println(accName + " is depositing $" + amount);
+        balance += amount;
+        System.out.println("New balance for " + accName + ": $" + balance);
+        notify(); // Notify waiting threads that a deposit has been made.
+    }
+
+    public synchronized void withdraw(double amount) {
+        if (balance < amount) {
+            System.out.println(accName + " is waiting for a deposit to cover $" + amount);
+            try {
+                wait(); // Suspend this thread until a deposit is made.
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println(accName + " is withdrawing $" + amount);
+        balance -= amount;
+        System.out.println("New balance for " + accName + ": $" + balance);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Customer customer1 = new Customer(1, "Alice", 1000.0);
+        Customer customer2 = new Customer(2, "Bob", 1500.0);
+
+        Thread withdrawThread1 = new Thread(() -> {
+            customer1.withdraw(800.0);
+        });
+
+        Thread withdrawThread2 = new Thread(() -> {
+            customer2.withdraw(1200.0);
+        });
+
+        Thread depositThread = new Thread(() -> {
+            try {
+                Thread.sleep(2000); // Simulate a delay before making a deposit.
+                customer1.deposit(500.0);
+                Thread.sleep(1000); // Simulate another delay.
+                customer2.deposit(1000.0);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        withdrawThread1.start();
+        withdrawThread2.start();
+        depositThread.start();
+    }
+}
