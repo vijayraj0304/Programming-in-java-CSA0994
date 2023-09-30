@@ -1,0 +1,65 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class StringOperations {
+    public static void main(String[] args) {
+        // i. Compare two strings lexicographically, ignoring case differences
+        String str1 = "Hello";
+        String str2 = "hello";
+        boolean lexicoComparison = str1.equalsIgnoreCase(str2);
+        System.out.println("i. Lexicographic Comparison: " + lexicoComparison);
+
+        // ii. Check if a string ends with the contents of another string
+        String mainString = "This is a sample text";
+        String endsWithString = "text";
+        boolean endsWith = mainString.endsWith(endsWithString);
+        System.out.println("ii. Ends with: " + endsWith);
+
+        // iii. Print current date and time in the specified format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = dateFormat.format(new Date());
+        System.out.println("iii. Current Date and Time: " + formattedDate);
+
+        // iv. Get the index of all characters of the alphabet
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        for (char c = 'a'; c <= 'z'; c++) {
+            int index = alphabet.indexOf(c);
+            System.out.println("iv. Index of " + c + ": " + index);
+        }
+
+        // v. Replace each substring matching the given regular expression with the replacement
+        String inputString = "The quick brown fox jumps over the lazy fox";
+        String replacedString = inputString.replaceAll("fox", "cat");
+        System.out.println("v. Replaced String: " + replacedString);
+
+        // vi. Get a substring between two specified positions
+        String originalString = "This is a sample string";
+        int startIndex = 5;
+        int endIndex = 12;
+        String substring = originalString.substring(startIndex, endIndex);
+        System.out.println("vi. Substring: " + substring);
+
+        // vii. Trim leading and trailing whitespace
+        String stringWithWhitespace = "   Trim this string   ";
+        String trimmedString = stringWithWhitespace.trim();
+        System.out.println("vii. Trimmed String: \"" + trimmedString + "\"");
+
+        // viii. Convert all characters to lowercase
+        String mixedCaseString = "MiXeD CaSe StRiNg";
+        String lowercaseString = mixedCaseString.toLowerCase();
+        System.out.println("viii. Lowercase String: " + lowercaseString);
+
+        // ix. Get the length of a string
+        String lengthString = "Length of this string";
+        int stringLength = lengthString.length();
+        System.out.println("ix. String Length: " + stringLength);
+
+        // x. Check if two String objects contain the same data
+        String str3 = "Sample";
+        String str4 = "Sample";
+        boolean sameData = str3.equals(str4);
+        System.out.println("x. Same Data: " + sameData);
+    }
+}
