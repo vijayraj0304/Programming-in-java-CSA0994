@@ -1,0 +1,77 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+
+class Patient {
+    private String name;
+    private int age;
+    private String sex;
+    private String address;
+    private String illness;
+    private double hospitalCharges;
+    private int daysAdmitted;
+
+    public Patient(String name, int age, String sex, String address, String illness, double hospitalCharges, int daysAdmitted) {
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+        this.address = address;
+        this.illness = illness;
+        this.hospitalCharges = hospitalCharges;
+        this.daysAdmitted = daysAdmitted;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getDaysAdmitted() {
+        return daysAdmitted;
+    }
+
+    public void setDaysAdmitted(int daysAdmitted) {
+        this.daysAdmitted = daysAdmitted;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + name +
+                "\nAge: " + age +
+                "\nSex: " + sex +
+                "\nAddress: " + address +
+                "\nIllness: " + illness +
+                "\nHospital Charges: $" + hospitalCharges +
+                "\nDays Admitted: " + daysAdmitted + " days\n";
+    }
+}
+
+public class HospitalManagementSystem {
+    public static void main(String[] args) {
+        ArrayList<Patient> patients = new ArrayList<>();
+
+        patients.add(new Patient("John Doe", 45, "Male", "123 Main St", "Fever", 1500.0, 7));
+        patients.add(new Patient("Jane Smith", 30, "Female", "456 Elm St", "Broken Arm", 2500.0, 10));
+
+        System.out.println("Patient Details:");
+        for (Patient patient : patients) {
+            System.out.println(patient);
+        }
+
+        for (Patient patient : patients) {
+            if (patient.getName().equals("John Doe")) {
+                patient.setDaysAdmitted(12); // Update days admitted
+            }
+        }
+
+        Iterator<Patient> iterator = patients.iterator();
+        while (iterator.hasNext()) {
+            Patient patient = iterator.next();
+            if (patient.getDaysAdmitted() > 15) {
+                iterator.remove();
+            }
+        }
+        System.out.println("\nUpdated Patient Details:");
+        for (Patient patient : patients) {
+            System.out.println(patient);
+        }
+    }
+}
