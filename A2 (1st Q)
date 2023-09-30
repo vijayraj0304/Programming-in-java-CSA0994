@@ -1,0 +1,48 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class StringOperations {
+    public static void main(String[] args) {
+        String str1 = "Hello";
+        String str2 = "hello";
+        boolean areEqualIgnoreCase = str1.equalsIgnoreCase(str2);
+        System.out.println("Are the strings equal (ignoring case)? " + areEqualIgnoreCase);
+        String mainStr = "This is a sample sentence.";
+        String endStr = "sentence.";
+        boolean endsWith = mainStr.endsWith(endStr);
+        System.out.println("Does the main string end with the end string? " + endsWith);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = sdf.format(new Date());
+        System.out.println("Current date and time: " + formattedDate);
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        for (int i = 0; i < alphabet.length(); i++) {
+            char letter = alphabet.charAt(i);
+            int index = alphabet.indexOf(letter);
+            System.out.println("Character: " + letter + ", Index: " + index);
+        }
+        String inputStr = "The quick brown fox jumps over the lazy dog.";
+        String replacedStr = inputStr.replaceAll("fox", "cat");
+        System.out.println("Replaced string: " + replacedStr);
+        int startPos = 10;
+        int endPos = 24;
+        String substring = inputStr.substring(startPos, endPos);
+        System.out.println("Substring between positions " + startPos + " and " + endPos + ": " + substring);
+        String stringWithWhitespace = "   This is a string with leading and trailing whitespace.   ";
+        String trimmedStr = stringWithWhitespace.trim();
+        System.out.println("Trimmed string: \"" + trimmedStr + "\"");
+
+        String uppercaseStr = "Convert Me To Lowercase";
+        String lowercaseStr = uppercaseStr.toLowerCase();
+        System.out.println("Lowercase string: " + lowercaseStr);
+
+        String sampleString = "The quick brown fox jumps over the lazy dog.";
+        int length = sampleString.length();
+        System.out.println("Length of the string: " + length);
+        String str3 = "Hello";
+        String str4 = "hello";
+        boolean areEqual = str3.equals(str4);
+        System.out.println("Are the strings equal? " + areEqual);
+    }
+}
