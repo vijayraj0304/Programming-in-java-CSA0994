@@ -1,0 +1,96 @@
+CREATE TABLE StudentBioData (
+    RollNumber INT PRIMARY KEY AUTO_INCREMENT,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Age INT,
+    Gender VARCHAR(10),
+    Address VARCHAR(100)
+);
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+
+public class StudentBioDataForm extends Frame implements ActionListener {
+    private Label firstNameLabel, lastNameLabel, ageLabel, genderLabel, addressLabel;
+    private TextField firstNameField, lastNameField, ageField, genderField, addressField;
+    private Button submitButton;
+
+    public StudentBioDataForm() {
+        setTitle("Student Bio-data Form");
+        setSize(400, 300);
+        setLayout(new GridLayout(6, 2));
+        
+        firstNameLabel = new Label("First Name:");
+        firstNameField = new TextField();
+        lastNameLabel = new Label("Last Name:");
+        lastNameField = new TextField();
+        ageLabel = new Label("Age:");
+        ageField = new TextField();
+        genderLabel = new Label("Gender:");
+        genderField = new TextField();
+        addressLabel = new Label("Address:");
+        addressField = new TextField();
+
+        submitButton = new Button("Submit");
+        submitButton.addActionListener(this);
+
+        add(firstNameLabel);
+        add(firstNameField);
+        add(lastNameLabel);
+        add(lastNameField);
+        add(ageLabel);
+        add(ageField);
+        add(genderLabel);
+        add(genderField);
+        add(addressLabel);
+        add(addressField);
+        add(new Label()); 
+        add(submitButton);
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == submitButton) {
+            // Get data from the form
+            String firstName = firstNameField.getText();
+            String lastName = lastNameField.getText();
+            int age = Integer.parseInt(ageField.getText());
+            String gender = genderField.getText();
+            String address = addressField.getText();
+
+            try {
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/your_database", "username", "password");
+                PreparedStatement pstmt = conn.prepareStatement("INSERT INTO StudentBioData (FirstName, LastName, Age, Gender, Address) VALUES (?, ?, ?, ?, ?)");
+                pstmt.setString(1, firstName);
+                pstmt.setString(2, lastName);
+                pstmt.setInt(3, age);
+                pstmt.setString(4, gender);
+                pstmt.setString(5, address);
+                pstmt.executeUpdate();
+                conn.close();
+
+                // Clear the form fields
+                firstNameField.setText("");
+                lastNameField.setText("");
+                ageField.setText("");
+                genderField.setText("");
+                addressField.setText("");
+
+                System.out.println("Data saved to the database.");
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        new StudentBioDataForm();
+    }
+}
