@@ -1,0 +1,106 @@
+CREATE TABLE SavingsBank (
+    Accn INT PRIMARY KEY,
+    NameOfAccountant VARCHAR(20),
+    TypeOfOperation VARCHAR(1),
+    Amount DOUBLE
+);
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class SavingsBankApplication {
+    public static void main(String[] args) {
+        String jdbcUrl = "jdbc:mysql://localhost:3306/your_database_name";
+        String username = "your_username";
+        String password = "your_password";
+
+        try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
+            Scanner scanner = new Scanner(System.in);
+
+            while (true) {
+                System.out.println("Choose an operation:");
+                System.out.println("1. Deposit");
+                System.out.println("2. Withdraw");
+                System.out.println("3. Exit");
+                System.out.print("Enter your choice: ");
+
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline character
+
+                switch (choice) {
+                    case 1:
+                        performDeposit(connection, scanner);
+                        break;
+                    case 2:
+                        performWithdraw(connection, scanner);
+                        break;
+                    case 3:
+                        System.out.println("Exiting the application.");
+                        return;
+                    default:
+                        System.out.println("Invalid choice. Please select a valid option.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void performDeposit(Connection connection, Scanner scanner) throws SQLException {
+        System.out.print("Enter account number: ");
+        int accountNumber = scanner.nextInt();
+        scanner.nextLine(); // Consume newline character
+
+        System.out.print("Enter name of accountant: ");
+        String accountantName = scanner.nextLine();
+
+        System.out.print("Enter amount to deposit: ");
+        double amount = scanner.nextDouble();
+
+        String insertQuery = "INSERT INTO SavingsBank (Accn, NameOfAccountant, TypeOfOperation, Amount) VALUES (?, ?, 'D', ?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+            preparedStatement.setInt(1, accountNumber);
+            preparedStatement.setString(2, accountantName);
+            preparedStatement.setDouble(3, amount);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Deposit successful.");
+            } else {
+                System.out.println("Deposit failed.");
+            }
+        }
+    }
+
+    private static void performWithdraw(Connection connection, Scanner scanner) throws SQLException {
+        System.out.print("Enter account number: ");
+        int accountNumber = scanner.nextInt();
+        scanner.nextLine(); // Consume newline character
+
+        System.out.print("Enter name of accountant: ");
+        String accountantName = scanner.nextLine();
+
+        System.out.print("Enter amount to withdraw: ");
+        double amount = scanner.nextDouble();
+
+        String insertQuery = "INSERT INTO SavingsBank (Accn, NameOfAccountant, TypeOfOperation, Amount) VALUES (?, ?, 'W', ?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+            preparedStatement.setInt(1, accountNumber);
+            preparedStatement.setString(2, accountantName);
+            preparedStatement.setDouble(3, amount);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Withdrawal successful.");
+            } else {
+                System.out.println("Withdrawal failed.");
+            }
+        }
+    }
+}
