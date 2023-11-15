@@ -1,0 +1,54 @@
+public class Student {
+    // Data members (attributes) of the Student class
+    private String studentId;
+    private String name;
+    private int age;
+    private String department;
+    private double gpa;
+
+    // Constructor to initialize a Student object
+    public Student(String studentId, String name, int age, String department, double gpa) {
+        this.studentId = studentId;
+        this.name = name;
+        this.age = age;
+        this.department = department;
+        this.gpa = gpa;
+    }
+
+    // Method to display student information
+    public void displayStudentInfo() {
+        System.out.println("Student ID: " + studentId);
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Department: " + department);
+        System.out.println("GPA: " + gpa);
+    }
+
+    // Method to enroll in a course
+    public void enrollInCourse(String courseName) {
+        System.out.println(name + " is enrolled in the course: " + courseName);
+    }
+
+    // Method to submit an assignment
+    public void submitAssignment(String assignmentName) {
+        System.out.println(name + " has submitted the assignment: " + assignmentName);
+    }
+
+    // Method to calculate the scholarship amount based on GPA
+    public double calculateScholarship() {
+        // Example logic: Higher GPA, higher scholarship
+        return gpa * 1000;
+    }
+
+    // Getter method for retrieving the GPA
+    public double getGpa() {
+        return gpa;
+    }
+
+    // Setter method for updating the GPA
+    public void setGpa(double gpa) {
+        this.gpa = gpa;
+    }
+
+    // Additional methods based on the specific requirements of the university management system can be added here.
+}
