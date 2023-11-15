@@ -1,0 +1,14 @@
+public class CheckConditions {
+    public static void main(String[] args) {
+        // Assign values to variables 'a' and 'b'
+        int a = 12;
+        int b = 45;
+
+        // Check if both conditions are true
+        if (a < 10 && a < b) {
+            System.out.println("Both conditions are true.");
+        } else {
+            System.out.println("At least one of the conditions is false.");
+        }
+    }
+}
